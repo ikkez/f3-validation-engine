@@ -1,0 +1,13 @@
+{
+    "name": "ikkez/f3-validation-engine",
+    "description": "Validation engine for Cortex and the PHP Fat-Free Framework",
+    "keywords": ["F3","fatfree","validation","cortex","GUMP","model"],
+    "homepage": "https://github.com/ikkez/f3-validation-engine",
+    "license": "GPL-3.0",
+    "require": {
+        "wixel/gump": "^1.5"
+    },
+    "autoload": {
+        "classmap": ["src/"]
+    }
+}
