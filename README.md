@@ -13,6 +13,28 @@ The validation system is based on the well known [GUMP](https://github.com/Wixel
 *  also usable without Cortex
 *  it's extendable
 
+## Table of Contents
+
+1. [Installation](#installation)
+2. [Getting started](#getting-started)
+3. [Validation](#validation)
+	1. [Cortex Mapper Validation](#cortex-mapper-validation)
+	2. [Data Array Validation](#data-array-validation)
+4. [Rules](#rules)
+	1. [Validators](#validators)
+	2. [Filters](#filters)
+	3. [Validation Level](#validation-level)
+	4. [Array Validation](#array-validation)
+	5. [Contains Check](#contains-check)
+5. [Error handling](#error-handling)
+	1. [Error context](#error-context)
+	2. [Field names](#field-names)
+	3. [Frontend integration](#frontend-integration)
+	4. [Custom Errors](#custom-errors)
+6. [Extend](#extend)
+7. [License](#license)
+
+
 ## Installation
 
 To install with composer, just run `composer require ikkez/f3-validation-engine`. 
