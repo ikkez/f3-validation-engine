@@ -23,9 +23,10 @@ The validation system is based on the well known [GUMP](https://github.com/Wixel
 4. [Rules](#rules)
 	1. [Validators](#validators)
 	2. [Filters](#filters)
-	3. [Validation Level](#validation-level)
-	4. [Array Validation](#array-validation)
-	5. [Contains Check](#contains-check)
+	3. [Validation Dependencies](#validation-dependencies)
+	4. [Validation Level](#validation-level)
+	5. [Array Validation](#array-validation)
+	6. [Contains Check](#contains-check)
 5. [Error handling](#error-handling)
 	1. [Error context](#error-context)
 	2. [Field names](#field-names)
@@ -316,6 +317,29 @@ In the following example, `foo` is only required when `bar = 2`:
 	]
 ]
 ```
+
+You can also use some more advanced dependency checks, like nested validation rules:
+
+```php
+'foo' => [
+	'validate' => 'required',
+	'validate_depends' => [
+		'bar' => ['validate', 'min_numeric,2']
+	]
+]
+```
+
+When the nested validation is `TRUE` (valid), then the dependency is met and the validation of `foo` goes on, otherwise it's skipped.
+If that's not enough, you can also add a custom function:
+
+```php
+'validate_depends' => [
+	'bar' => ['call', function($value,$input) { return (bool) $value % 3 }]
+]
+```
+
+An F3 callstring like `['call', 'Foo->bar']` is also possible.
+
 
 ### Validation Level
 
