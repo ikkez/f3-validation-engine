@@ -446,6 +446,11 @@ In example, our username field in user model should be labeled at:
 
 While you're at it, you could also think about placeholder labels, help text and more that might fit into this schema, which can potentially improve the frontend wiring as well.
 
+When you get an error within validating an array using the `validate_array` or `validate_nested_array` rules, the field labels are moved one key below the entry field. I.e. when you have an address field on your user model that includes a zip-code field, the label context would be:
+  
+`model.user.address.zip.label = Zip Code`
+
+
 ### Frontend integration
 
 When you've set the error key within the `onError` handler like in the sample from the beginning, you can easily use those to display custom error messages or add classes to your markup:
