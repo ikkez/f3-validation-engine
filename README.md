@@ -400,7 +400,7 @@ It's also possible to validate a nested array / an array of assoc arrays:
 
 *- work in progress -*
 
-It is also possible to define the value contains check (`contains` validator) with a simple `item` key in your `$fieldConf` (or `$rules` array):
+It is also possible to define the values that *contains* will check (`contains` validator) with a simple `item` key in your `$fieldConf` (or `$rules` array):
 
 ```php
 'foo' => [
@@ -413,7 +413,7 @@ It is also possible to define the value contains check (`contains` validator) wi
 ]
 ```
 
-If the value does not match one of the items defined, the validation will fail.
+If the value does not match one of the items defined, the validation will fail. It's also possible to put a string to `item`, which is a F3 hive key, that contains the array with items.
 
 ## Error handling
 

@@ -11,8 +11,8 @@
  *  Copyright (c) 2019 by ikkez
  *  Christian Knuth <mail@ikkez.de>
  *
- *  @version 1.5.0
- *  @date 18.02.2019
+ *  @version 1.5.1
+ *  @date 21.01.2020
  *  @since 08.03.2015
  *  @package Cortex
  */
@@ -199,7 +199,8 @@ class Validation extends \Prefab {
 				// move contains check
 				if (isset($conf['item']) && !empty($val))
 					$conf['validate'] = (!empty($conf['validate'])?$conf['validate'].'|':'').
-						'contains, \''.implode("';'",$conf['item']).'\'';
+						'contains, \''.implode("';'",(is_string($conf['item'])
+							?$this->f3->{$conf['item']}:$conf['item'])).'\'';
 				// validate array field
 				if (isset($conf['validate_array']) && !empty($val)) {
 					$valid_array = $this->validate($conf['validate_array'],$val,$context);
@@ -346,7 +347,8 @@ class Validation extends \Prefab {
 				// move contains check
 				if (isset($conf['item']) && !empty($val))
 					$conf['validate'] = (!empty($conf['validate'])?$conf['validate'].'|':'').
-						'contains, \''.implode("';'",$conf['item']).'\'';
+						'contains, \''.implode("';'",is_string($conf['item'])
+							?$this->f3->{$conf['item']}:$conf['item']).'\'';
 				// validate array field
 				if (isset($conf['validate_array']) && !empty($val)) {
 					if ($context)
