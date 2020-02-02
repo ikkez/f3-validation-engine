@@ -462,7 +462,8 @@ class Validation extends \Prefab {
 		if (is_array($field))
 			list($field,$params) = $field;
 		if (!$context ||
-			!$this->f3->exists($this->lang_prefix.$context_label.'.label',$fieldLabel))
+			(!$this->f3->exists($this->lang_prefix.$context_label.'.label',$fieldLabel) &&
+			!$this->f3->exists($this->lang_prefix.'model.base.'.$field.'.label',$fieldLabel)))
 			$fieldLabel = ucfirst($field);
 		$errText = $this->f3->format($errText,preg_replace('/-_/','',$fieldLabel),$params);
 		return $errText;
