@@ -8,11 +8,11 @@
  *  compliance with the license. Any of the license terms and conditions
  *  can be waived if you get permission from the copyright holder.
  *
- *  Copyright (c) 2019 by ikkez
+ *  Copyright (c) 2020 by ikkez
  *  Christian Knuth <mail@ikkez.de>
  *
- *  @version 1.5.1
- *  @date 21.01.2020
+ *  @version 1.5.2
+ *  @date 02.02.2020
  *  @since 08.03.2015
  *  @package Cortex
  */
