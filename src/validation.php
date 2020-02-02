@@ -56,6 +56,10 @@ class Validation extends \Prefab {
 			return $input[$field] != 0 && !empty($input[$field]);
 		},'The field "{0}" must not be empty');
 
+		$this->addValidator('notnull', function($field,$input,$param=NULL) {
+			return $input[$field] !== NULL;
+		},'The field {0} is required');
+
 		$this->addValidator("unique", function($field, $input, $param=NULL) {
 			$model = $this->getModel();
 			if (!$model)
