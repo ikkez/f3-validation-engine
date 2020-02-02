@@ -231,7 +231,9 @@ The default validators from GUMP are:
 *	`empty`  
 	Check if a field value is `empty`.
 *	`notempty`  
-	Ensure that a field value is not `empty`.
+	Ensure that a field value is not `empty`, no empty string, no string `"0"`.
+*	`notnull`  
+	Ensure that a field value is not `NULL`. It's a less-strict "required" check.
 *	`email_host`  
 	Checks the MX domain record from a given email address. Fails if the host system does not accept emails. This validator does only work on valid emails, but does not validate the email address itself (combine this with `valid_email`).
 *	`unique` *- Cortex only -*  
@@ -413,7 +415,8 @@ It is also possible to define the values that *contains* will check (`contains` 
 ]
 ```
 
-If the value does not match one of the items defined, the validation will fail. It's also possible to put a string to `item`, which is a F3 hive key, that contains the array with items.
+If the value does not match one of the items defined, the validation will fail. 
+It's also possible to put a string to `item`, which is a **F3 hive key**, that contains the array with items.
 
 ## Error handling
 
@@ -446,9 +449,22 @@ In example, our username field in user model should be labeled at:
 
 While you're at it, you could also think about placeholder labels, help text and more that might fit into this schema, which can potentially improve the frontend wiring as well.
 
-When you get an error within validating an array using the `validate_array` or `validate_nested_array` rules, the field labels are moved one key below the entry field. I.e. when you have an address field on your user model that includes a zip-code field, the label context would be:
+When you get an error within validating an array using the `validate_array` or `validate_nested_array` rules, the field labels are moved one key below the entry field. 
+I.e. when you have an array address field on your user model that includes a zip-code field, the label context would be:
   
 `model.user.address.zip.label = Zip Code`
+
+#### Default field labels
+
+If you have common fields that are present on multiple models and don't want to repeat yourself defining those translated labels for each and every model again, you can define a default fallback label at `model.base`:
+
+```
+[model.base]
+deleted_at.label = deleted at
+enabled_from.label = visible from
+enabled_until.label = visible until
+```
+
 
 
 ### Frontend integration
