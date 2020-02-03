@@ -138,11 +138,7 @@ class GUMP
     public static function add_validator($rule, $callback, $error_message = null)
     {
         $method = 'validate_'.$rule;
-
-        if (method_exists(__CLASS__, $method) || isset(self::$validation_methods[$rule])) {
-            throw new Exception("Validator rule '$rule' already exists.");
-        }
-
+        
         self::$validation_methods[$rule] = $callback;
         if ($error_message) {
             self::$validation_methods_errors[$rule] = $error_message;
