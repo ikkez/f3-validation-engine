@@ -11,11 +11,13 @@
  *  Copyright (c) 2020 by ikkez
  *  Christian Knuth <mail@ikkez.de>
  *
- *  @version 1.5.2
+ *  @version 1.6.0
  *  @date 02.02.2020
  *  @since 08.03.2015
  *  @package Cortex
  */
+
+require 'gump.class.php';
 
 class Validation extends \Prefab {
 
@@ -179,7 +181,7 @@ class Validation extends \Prefab {
 									[$mapper->get($field),$mapper]);
 								break;
 							case 'validate':
-								$skip=GUMP::is_valid([$key=>$ref],[$key=>$rule[1]]);
+								$skip=!GUMP::is_valid([$key=>$ref],[$key=>$rule[1]]);
 								break;
 						}
 					} else
@@ -251,7 +253,6 @@ class Validation extends \Prefab {
 				$this->models[] = $mapper;
 				$validated = $validator->validate($data, $gump_conf['rules']);
 				array_pop($this->models);
-				$errMsgs=$validator->get_errors_array();
 				if ($validated !== true) {
 					$valid = false;
 					foreach ($validated as $err) {
@@ -260,7 +261,7 @@ class Validation extends \Prefab {
 						// provide translated error messages
 						$errText=$this->renderErrorText([$err['field'],$err['param']],$err['rule'],$context);
 						if (!$errText)
-							$errText = $errMsgs[$err['field']];
+							$errText = $err['field'];
 						if ($this->onerror)
 							$this->f3->call($this->onerror,
 								array($errText,$context.'.'.$err['rule']));
@@ -330,7 +331,7 @@ class Validation extends \Prefab {
 								$skip=\Base::instance()->call($rule[1],[$val,$data]);
 								break;
 							case 'validate':
-								$skip=\GUMP::is_valid([$key=>$ref],[$key=>$rule[1]]);
+								$skip=!\GUMP::is_valid([$key=>$ref],[$key=>$rule[1]]);
 								break;
 						}
 					} else
@@ -392,7 +393,6 @@ class Validation extends \Prefab {
 				$data = $validator->filter($data, $gump_conf['filter']);
 			if ($gump_conf['rules']) {
 				$validated = $validator->validate($data, $gump_conf['rules']);
-				$errMsgs=$validator->get_errors_array();
 				if ($validated !== true) {
 					$valid = false;
 					foreach ($validated as $err) {
@@ -402,7 +402,7 @@ class Validation extends \Prefab {
 						// provide translated error messages
 						$errText=$this->renderErrorText([$err['field'],$err['param']],$err['rule'],$context);
 						if (!$errText)
-							$errText = $errMsgs[$err['field']];
+							$errText = $err['field'];
 						if ($this->onerror)
 							$this->f3->call($this->onerror,
 								array($errText,($context?$context_error.'.':'').$err['field'].'.'.$err['rule']));
