@@ -177,7 +177,7 @@ class Validation extends \Prefab {
 					if (is_array($rule)) {
 						switch ($rule[0]) {
 							case 'call':
-								$skip=\Base::instance()->call($rule[1],
+								$skip=!\Base::instance()->call($rule[1],
 									[$mapper->get($field),$mapper]);
 								break;
 							case 'validate':
@@ -328,7 +328,7 @@ class Validation extends \Prefab {
 					if (is_array($rule)) {
 						switch ($rule[0]) {
 							case 'call':
-								$skip=\Base::instance()->call($rule[1],[$val,$data]);
+								$skip=!\Base::instance()->call($rule[1],[$val,$data]);
 								break;
 							case 'validate':
 								$skip=!\GUMP::is_valid([$key=>$ref],[$key=>$rule[1]]);
