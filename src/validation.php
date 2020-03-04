@@ -55,7 +55,7 @@ class Validation extends \Prefab {
 		},'The field "{0}" must be empty');
 
 		$this->addValidator("notempty", function($field, $input, $param=NULL) {
-			return $input[$field] != 0 && !empty($input[$field]);
+			return $input[$field] !== 0 && $input[$field] !== 0.0 && $input[$field] !== '0' && !empty($input[$field]);
 		},'The field "{0}" must not be empty');
 
 		$this->addValidator('notnull', function($field,$input,$param=NULL) {
