@@ -8,7 +8,7 @@
  *
  * @version     1.5
  */
-class GUMP
+class GUMPy
 {
     // Singleton instance of GUMP
     protected static $instance = null;
@@ -39,7 +39,7 @@ class GUMP
     /**
      * Function to create and return previously created instance
      *
-     * @return GUMP
+     * @return GUMPy
      */
 
     public static function get_instance(){

@@ -17,7 +17,7 @@
  *  @package Cortex
  */
 
-require 'gump.class.php';
+require 'gumpy.class.php';
 
 class Validation extends \Prefab {
 
@@ -101,7 +101,7 @@ class Validation extends \Prefab {
 	 * @param callable|string $callback
 	 */
 	function addFilter($rule,$callback) {
-		\GUMP::add_filter($rule,function($value,$params=NULL) use ($callback) {
+		\GUMPy::add_filter($rule,function($value,$params=NULL) use ($callback) {
 			return $this->f3->call($callback,$value,$params);
 		});
 	}
@@ -113,7 +113,7 @@ class Validation extends \Prefab {
 	 * @param string $fallback_msg
 	 */
 	function addValidator($rule,$callback,$fallback_msg=null) {
-		\GUMP::add_validator($rule, function($field, $input, $param=NULL) use ($callback){
+		\GUMPy::add_validator($rule, function($field, $input, $param=NULL) use ($callback){
 			return $this->f3->call($callback,[$field, $input, $param]);
 		}, $fallback_msg);
 		if ($fallback_msg)
@@ -181,7 +181,7 @@ class Validation extends \Prefab {
 									[$mapper->get($field),$mapper]);
 								break;
 							case 'validate':
-								$skip=!GUMP::is_valid([$key=>$ref],[$key=>$rule[1]]);
+								$skip=!GUMPy::is_valid([$key=>$ref],[$key=>$rule[1]]);
 								break;
 						}
 					} else
@@ -241,7 +241,7 @@ class Validation extends \Prefab {
 		}
 		// run GUMP
 		if ($gump_conf['filter'] || $gump_conf['rules'] || $gump_conf['post_filter']) {
-			$validator = \GUMP::get_instance();
+			$validator = \GUMPy::get_instance();
 			$data = $mapper->cast(null,0);
 			// lazy-load relational data
 			foreach ($gump_conf['get_fields'] as $field => $conf) {
@@ -331,7 +331,7 @@ class Validation extends \Prefab {
 								$skip=!\Base::instance()->call($rule[1],[$val,$data]);
 								break;
 							case 'validate':
-								$skip=!\GUMP::is_valid([$key=>$ref],[$key=>$rule[1]]);
+								$skip=!\GUMPy::is_valid([$key=>$ref],[$key=>$rule[1]]);
 								break;
 						}
 					} else
@@ -387,7 +387,7 @@ class Validation extends \Prefab {
 		}
 		// run GUMP
 		if ($gump_conf['filter'] || $gump_conf['rules'] || $gump_conf['post_filter']) {
-			$validator = \GUMP::get_instance();
+			$validator = \GUMPy::get_instance();
 
 			if ($gump_conf['filter'])
 				$data = $validator->filter($data, $gump_conf['filter']);
