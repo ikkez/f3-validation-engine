@@ -1981,7 +1981,7 @@ class GUMP
             return;
         }
 
-        $regex = '/^(\d[\s-\.]?)?[\(\[\s-\.]{0,2}?\d{3}[\)\]\s-\.]{0,2}?\d{3}[\s-\.]?\d{4}$/i';
+        $regex = '/^(\(?([\d \-\)\–\+\/\(]+){6,}\)?([ .\-–\/]?)([\d]+))$/i';
         if (!preg_match($regex, $input[$field])) {
             return array(
               'field' => $field,
