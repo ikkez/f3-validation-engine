@@ -11,8 +11,8 @@
  *  Copyright (c) 2020 by ikkez
  *  Christian Knuth <mail@ikkez.de>
  *
- *  @version 1.6.0
- *  @date 02.02.2020
+ *  @version 1.6.1
+ *  @date 22.03.2020
  *  @since 08.03.2015
  *  @package Cortex
  */
