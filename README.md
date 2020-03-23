@@ -506,6 +506,17 @@ if ($valid) {
 }
 ```
 
+`emitError( string $field, string $type, string|array $context = NULL, string $fallback = NULL)`
+
+To use error messages from a different field, you can use an array as `$context` parameter:
+
+```
+\Validation::instance()->emitError('phone_mail_copy','required',[
+	'model.employerprofile.phone_mail_copy', // context
+	'model.employerprofile.phone_mail_orig', // context label
+]);
+```
+
 
 ## Extend
 
