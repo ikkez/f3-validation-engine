@@ -455,6 +455,7 @@ class Validation extends \Prefab {
 		if (is_array($context))
 			list($context,$context_label) = $context;
 		if (!$this->f3->exists($this->lang_prefix.'error.'.$context.'.'.$type,$errText) &&
+			!$this->f3->exists($this->lang_prefix.'error.'.$context_label.'.'.$type,$errText) &&
 			!$this->f3->exists($this->lang_prefix.'error.validation.'.$type,$errText)) {
 			if ($fallback)
 				$errText = $fallback;
