@@ -11,8 +11,8 @@
  *  Copyright (c) 2020 by ikkez
  *  Christian Knuth <mail@ikkez.de>
  *
- *  @version 1.6.3
- *  @date 23.07.2020
+ *  @version 1.6.4
+ *  @date 06.10.2020
  *  @since 08.03.2015
  *  @package Cortex
  */
@@ -102,7 +102,7 @@ class Validation extends \Prefab {
 	 */
 	function addFilter($rule,$callback) {
 		\GUMPy::add_filter($rule,function($value,$params=NULL) use ($callback) {
-			return $this->f3->call($callback,$value,$params);
+			return $this->f3->call($callback,[$value,$params]);
 		});
 	}
 
