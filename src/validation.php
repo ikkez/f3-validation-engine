@@ -141,7 +141,7 @@ class Validation extends \Prefab {
 		$level_cmp = ($op[0]=='<') ? -1 : (($op[0]=='>') ? 1 : 0);
 		$level+=($op=='<=') ? 1 : (($op=='>=') ? -1 : 0);
 		$valid = true;
-		$context_error = strtolower(str_replace('\\','.',get_class($mapper)));
+		$context_error = implode('.',array_map('lcfirst',explode('\\',get_class($mapper))));
 		$gump_conf = [
 			'copy_fields' => [],
 			'get_fields' => [],
