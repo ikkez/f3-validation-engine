@@ -476,7 +476,7 @@ class Validation extends \Prefab {
 
 	/**
 	 * send a single validation error to the onError handler
-	 * @param $field
+	 * @param string|array $field fieldName or array [fieldName, [params] ]
 	 * @param $type
 	 * @param null $context
 	 * @param null $fallback
@@ -485,6 +485,8 @@ class Validation extends \Prefab {
 		$errText = $this->renderErrorText($field,$type,$context,$fallback);
 		list($context_error,$context_label) = is_array($context) ? $context : [$context,$context];
 		// provide translated error messages
+		if (is_array($field))
+			$field=$field[0];
 		if ($errText && $this->onerror)
 			$this->f3->call($this->onerror,
 				array($errText,($context?$context_error.'.':'').$field.'.'.$type));
