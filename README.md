@@ -510,13 +510,21 @@ if ($valid) {
 
 To use error messages from a different field, you can use an array as `$context` parameter:
 
-```
+```php
 \Validation::instance()->emitError('phone_mail_copy','required',[
 	'model.employerprofile.phone_mail_copy', // context
 	'model.employerprofile.phone_mail_orig', // context label
 ]);
 ```
 
+You can also use params on custom errors:
+
+```php
+if ($f3->get('POST.password') !== $f3->get('POST.password2')) {
+	// The {0} field does not equal {1} field
+	\Validation::instance()->emitError(['password','Password repeat'],'equalsfield','model.user');
+}
+```
 
 ## Extend
 
