@@ -346,7 +346,10 @@ An F3 callstring like `['call', 'Foo->bar']` is also possible.
 ### Validation Level
 
 Similar to a validation dependency, you can also define validation levels. 
-If a validation level is defined of a field, its validation is completely skipped (filters however are applied).
+If a validation level is defined on a field, its validation is completely skipped (filters however are applied).
+
+Validation levels are useful when you want to validate a record in certains steps, i.e. a "draft" might need less validation rules before it is considered to be published.
+
 You can define a validation level like this:
 
 ```php
@@ -464,6 +467,18 @@ deleted_at.label = deleted at
 enabled_from.label = visible from
 enabled_until.label = visible until
 ```
+
+#### Custom model context name conversion
+
+By default the model name is converted to a lower-case string. I.e. this class `\Model\BackendUser` is converted to the context: `model.backenduser`. You can adjust this behaviour by setting a custom function:
+
+```php
+\Validation::instance()->setStringifyModel(function($mapper) {
+	return implode('.',array_map('lcfirst',explode('\\',get_class($mapper))));
+});
+```
+
+This example will transform the classnames to `model.backendUser`.
 
 
 

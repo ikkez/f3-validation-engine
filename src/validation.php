@@ -27,6 +27,7 @@ class Validation extends \Prefab {
 	protected $lang_prefix;
 	protected $models=[];
 	protected $fallback_msg=[];
+	protected $stringifyModel;
 
 	/**
 	 * Validation constructor.
@@ -35,6 +36,10 @@ class Validation extends \Prefab {
 	function __construct() {
 		$this->f3 = \Base::instance();
 		$this->lang_prefix = $this->f3->get('PREFIX');
+
+		$this->setStringifyModel(function($mapper) {
+			return strtolower(str_replace('\\','.',get_class($mapper)));
+		});
 
 		// register additional filters
 		//////////////////////////////////
@@ -129,6 +134,14 @@ class Validation extends \Prefab {
 	}
 
 	/**
+	 * set new custom callable method to stringify the model name
+	 * @return mixed|null
+	 */
+	function setStringifyModel($callback) {
+		$this->stringifyModel = $callback;
+	}
+
+	/**
 	 * init mapper validation
 	 * @param \DB\Cortex $mapper
 	 * @param mixed $level
@@ -141,7 +154,7 @@ class Validation extends \Prefab {
 		$level_cmp = ($op[0]=='<') ? -1 : (($op[0]=='>') ? 1 : 0);
 		$level+=($op=='<=') ? 1 : (($op=='>=') ? -1 : 0);
 		$valid = true;
-		$context_error = strtolower(str_replace('\\','.',get_class($mapper)));
+		$context_error = call_user_func($this->stringifyModel, $mapper);
 		$gump_conf = [
 			'copy_fields' => [],
 			'get_fields' => [],
@@ -468,7 +481,7 @@ class Validation extends \Prefab {
 			list($field,$params) = $field;
 		if (!$context ||
 			(!$this->f3->exists($this->lang_prefix.$context_label.'.label',$fieldLabel) &&
-			!$this->f3->exists($this->lang_prefix.'model.base.'.$field.'.label',$fieldLabel)))
+				!$this->f3->exists($this->lang_prefix.'model.base.'.$field.'.label',$fieldLabel)))
 			$fieldLabel = ucfirst($field);
 		$errText = $this->f3->format($errText,preg_replace('/-_/','',$fieldLabel),$this->f3->stringify($params));
 		return $errText;
