@@ -11,8 +11,8 @@
  *  Copyright (c) 2021 by ikkez
  *  Christian Knuth <mail@ikkez.de>
  *
- *  @version 1.7.0
- *  @date 24.01.2021
+ *  @version 1.7.1
+ *  @date 10.09.2021
  *  @since 08.03.2015
  *  @package Cortex
  */
@@ -73,7 +73,9 @@ class Validation extends \Prefab {
 				return true;
 			$val = $input[$field];
 			$valid = true;
-			if (empty($val) || !$model->changed($field))
+			if ($model->dbtype() !== 'SQL' && empty($val))
+				return $valid;
+			if ($model->dbtype() === 'SQL' && (empty($val) || !$model->changed($field)))
 				return $valid;
 			$filter = $model->dry()
 				// new record
