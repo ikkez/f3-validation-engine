@@ -138,7 +138,7 @@ class GUMPy
     public static function add_validator($rule, $callback, $error_message = null)
     {
         $method = 'validate_'.$rule;
-        
+
         self::$validation_methods[$rule] = $callback;
         if ($error_message) {
             self::$validation_methods_errors[$rule] = $error_message;
@@ -385,7 +385,7 @@ class GUMPy
 
                         // Check if we have rule parameters
                         if (strstr($rule, $parameters_delimiter) !== false) {
-                            $rule   = explode($parameters_delimiter, $rule);
+                            $rule   = explode($parameters_delimiter, $rule , 2);
                             $method = 'validate_'.$rule[0];
                             $param  = $rule[1];
                             $rule   = $rule[0];
