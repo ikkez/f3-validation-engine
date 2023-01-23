@@ -118,7 +118,7 @@ class GUMPy
     public static function xss_clean(array $data)
     {
         foreach ($data as $k => $v) {
-            $data[$k] = filter_var($v, FILTER_SANITIZE_STRING);
+            $data[$k] = htmlspecialchars($v);
         }
 
         return $data;
@@ -287,7 +287,6 @@ class GUMPy
      */
     public function sanitize(array $input, array $fields = array(), $utf8_encode = true)
     {
-        $magic_quotes = (bool) get_magic_quotes_gpc();
 
         if (empty($fields)) {
             $fields = array_keys($input);
@@ -304,9 +303,6 @@ class GUMPy
                     $value = $this->sanitize($value);
                 }
                 if (is_string($value)) {
-                    if ($magic_quotes === true) {
-                        $value = stripslashes($value);
-                    }
 
                     if (strpos($value, "\r") !== false) {
                         $value = trim($value);
@@ -320,7 +316,7 @@ class GUMPy
                         }
                     }
 
-                    $value = filter_var($value, FILTER_SANITIZE_STRING);
+                    $value = htmlspecialchars($value);
                 }
 
                 $return[$field] = $value;
@@ -543,7 +539,7 @@ class GUMPy
                         $method = 'filter_'.$filter;
                         $value = $this->$method($value, $params);
                     } elseif (function_exists($filter)) {
-                        $value = $filter($value);
+                        $value = $filter($value??'');
                     } elseif (isset(self::$filter_methods[$filter])) {
                         $value = call_user_func(self::$filter_methods[$filter], $value, $params);
                     } else {
@@ -577,7 +573,7 @@ class GUMPy
         $words = explode(',', self::$en_noise_words);
 
         foreach ($words as $word) {
-            $word = trim($word);
+            $word = trim($word??'');
 
             $word = " $word "; // Normalize
 
@@ -586,7 +582,7 @@ class GUMPy
             }
         }
 
-        return trim($value);
+        return trim($value??'');
     }
 
     /**
@@ -616,7 +612,7 @@ class GUMPy
      */
     protected function filter_sanitize_string($value, $params = null)
     {
-        return filter_var($value, FILTER_SANITIZE_STRING);
+        return htmlspecialchars($value);
     }
 
     /**
@@ -793,7 +789,7 @@ class GUMPy
     protected function filter_slug($value, $params = null)
     {
         $delimiter = '-';
-        $slug = strtolower(trim(preg_replace('/[\s-]+/', $delimiter, preg_replace('/[^A-Za-z0-9-]+/', $delimiter, preg_replace('/[&]/', 'and', preg_replace('/[\']/', '', iconv('UTF-8', 'ASCII//TRANSLIT', $value))))), $delimiter));
+        $slug = strtolower(trim(preg_replace('/[\s-]+/', $delimiter, preg_replace('/[^A-Za-z0-9-]+/', $delimiter, preg_replace('/[&]/', 'and', preg_replace('/[\']/', '', iconv('UTF-8', 'ASCII//TRANSLIT', $value??''))))), $delimiter));
         return $slug;
     }
 
@@ -817,9 +813,9 @@ class GUMPy
             return;
         }
 
-        $param = trim(strtolower($param));
+        $param = trim(strtolower($param??''));
 
-        $value = trim(strtolower($input[$field]));
+        $value = trim(strtolower($input[$field]??''));
 
         if (preg_match_all('#\'(.+?)\'#', $param, $matches, PREG_PATTERN_ORDER)) {
             $param = $matches[1];
@@ -856,9 +852,9 @@ class GUMPy
             return;
         }
 
-        $param = trim(strtolower($param));
+        $param = trim(strtolower($param??''));
 
-        $value = trim(strtolower($input[$field]));
+        $value = trim(strtolower($input[$field]??''));
 
         $param = explode(';', $param);
 
@@ -893,9 +889,9 @@ class GUMPy
             return;
         }
 
-        $param = trim(strtolower($param));
+        $param = trim(strtolower($param??''));
 
-        $value = trim(strtolower($input[$field]));
+        $value = trim(strtolower($input[$field]??''));
 
         $param = explode(';', $param);
 
@@ -1861,7 +1857,7 @@ class GUMPy
         }
 
         if (is_array($input[$field]) && $input[$field]['error'] !== 4) {
-            $param = trim(strtolower($param));
+            $param = trim(strtolower($param??''));
             $allowed_extensions = explode(';', $param);
 
             $path_info = pathinfo($input[$field]['name']);
@@ -1948,7 +1944,7 @@ class GUMPy
     private function trimScalar($value)
     {
         if (is_scalar($value)) {
-            $value = trim($value);
+            $value = trim($value??'');
         }
 
         return $value;
